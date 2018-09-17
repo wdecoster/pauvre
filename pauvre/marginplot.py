@@ -393,7 +393,6 @@ def margin_plot(df, **kwargs):
         image_formats=kwargs["fileform"],
         dpi=kwargs["dpi"],
         no_timestamp=kwargs["no_timestamp"],
-        path=path,
         transparent=kwargs["TRANSPARENT"])
 
 
