@@ -115,7 +115,7 @@ def generate_histogram(panel, data_list, max_plot_length, min_plot_length,
                        top_spine=False, right_spine=False, x_label=None,
                        y_label=None):
 
-    bins = np.arange(0, max_plot_length, bin_interval)
+    bins = np.arange(0, max_plot_length, bin_interval or 1)
 
     bin_values, bins2 = np.histogram(data_list, bins)
 
@@ -152,7 +152,7 @@ def generate_heat_map(panel, data_frame, min_plot_length, min_plot_qual,
         hex_this = data_frame.query('length<{} and numks<{}'.format(
             max_plot_length, max_plot_qual))
         # This single line controls plotting the hex bins in the panel
-        hex_vals = panel.hexbin(hex_this['numks'], hex_this['length'], gridsize=int(np.ceil(max_plot_qual/2)),
+        hex_vals = panel.hexbin(hex_this['numks'], hex_this['length'], gridsize=int(np.ceil(max_plot_qual / 2)),
                                 linewidths=0.0, cmap=color)
 
     else:
@@ -161,7 +161,7 @@ def generate_heat_map(panel, data_frame, min_plot_length, min_plot_qual,
 
         # This single line controls plotting the hex bins in the panel
         hex_vals = panel.hexbin(hex_this['meanQual'], hex_this['length'], gridsize=49,
-                            linewidths=0.0, cmap=color)
+                                linewidths=0.0, cmap=color)
     for each in panel.spines:
         panel.spines[each].set_visible(False)
 
@@ -365,7 +365,7 @@ def margin_plot(df, **kwargs):
 
     # Generate heat map
     counts = generate_heat_map(heat_map_panel, df, min_plot_length, min_plot_qual,
-                               max_plot_length, max_plot_qual, purple1, kmerdf = kwargs["kmerdf"])
+                               max_plot_length, max_plot_qual, purple1, kmerdf=kwargs["kmerdf"])
 
     # Generate legend
     generate_legend(legend_panel, counts, purple1)
@@ -392,9 +392,10 @@ def margin_plot(df, **kwargs):
         base=file_base,
         image_formats=kwargs["fileform"],
         dpi=kwargs["dpi"],
-        no_timestamp = kwargs["no_timestamp"],
+        no_timestamp=kwargs["no_timestamp"],
         path=path,
         transparent=kwargs["TRANSPARENT"])
+
 
 def run(args):
     if args.kmerdf:
