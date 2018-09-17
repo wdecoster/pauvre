@@ -389,7 +389,7 @@ def margin_plot(df, **kwargs):
     else:
         path = None
     print_images(
-        base_output_name=file_base,
+        base=file_base,
         image_formats=kwargs["fileform"],
         dpi=kwargs["dpi"],
         no_timestamp = kwargs["no_timestamp"],
